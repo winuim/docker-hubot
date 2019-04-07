@@ -1,0 +1,12 @@
+version: '2.1'
+
+services:
+  hubot:
+    image: hubot:alpine
+    build:
+      context: .
+    environment:
+      - HUBOT_OWNER
+      - HUBOT_SLACK_TOKEN
+    stdin_open: true
+    tty: true
