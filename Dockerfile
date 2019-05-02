@@ -1,21 +1,26 @@
 FROM node:alpine
-
-ARG HUBOT_OWNER="changeme"
-
-RUN set -x && apk update && apk add \
+LABEL maintainer="Yohei Uema <winuim@gmail.com>"
+WORKDIR /app
+COPY entrypoint.sh /app/entrypoint.sh
+RUN find /app -type f -exec chmod -x {} \;
+# Update & Install Requirments Packages.
+RUN apk update && apk add \
     bash \
     shadow \
     tzdata \
+    && rm -rf /var/cache/apk/* \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && echo "Asia/Tokyo" > /etc/timezone \
-    && useradd -m hubot \
-    && npm install -g yo generator-hubot
+    && npm install -g yo generator-hubot coffee-script \
+    && groupadd -r hubot && useradd -m -r -g hubot hubot \
+    && chown -R hubot:hubot /app \
+    && chmod +x entrypoint.sh
 
 USER hubot
-WORKDIR /home/hubot
+WORKDIR /app
+ARG HUBOT_OWNER
+RUN yo hubot --owner="${HUBOT_OWNER}" --name="Hubot" --description="Delightfully aware robutt" --adapter=slack --defaults
 
-RUN set -x && \
-    yo hubot --owner=$HUBOT_OWNER --name="Hubot" --description="Delightfully aware robutt" --adapter=slack --defaults
-
-ENV HUBOT_SLACK_TOKEN="xoxb-"
-CMD ["bin/hubot", "-a", "slack"]
+# Run
+ENTRYPOINT [ "./entrypoint.sh" ]
+CMD [ "run" ]

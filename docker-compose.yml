@@ -2,11 +2,12 @@ version: '2.1'
 
 services:
   hubot:
-    image: hubot:alpine
+    image: winuim/hubot
     build:
       context: .
+      args:
+        - HUBOT_OWNER=Yohei Uema <winuim@gmail.com>
     environment:
-      - HUBOT_OWNER
       - HUBOT_SLACK_TOKEN
     stdin_open: true
     tty: true
