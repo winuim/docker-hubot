@@ -1,4 +1,4 @@
-FROM arm32v7/node
+FROM arm32v6/node:alpine
 LABEL maintainer="Yohei Uema <winuim@gmail.com>"
 WORKDIR /app
 COPY entrypoint.sh /app/entrypoint.sh
