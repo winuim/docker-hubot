@@ -2,7 +2,6 @@ FROM arm32v7/node
 LABEL maintainer="Yohei Uema <winuim@gmail.com>"
 WORKDIR /app
 COPY entrypoint.sh /app/entrypoint.sh
-RUN find /app -type f -exec chmod -x {} \;
 # Update & Install Requirments Packages.
 RUN apk update && apk add \
     bash \
