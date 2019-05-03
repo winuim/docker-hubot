@@ -11,13 +11,12 @@ RUN apk update && apk add \
     && rm -rf /var/cache/apk/* \
     && cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime \
     && echo "Asia/Tokyo" > /etc/timezone \
-    && npm install -g yo generator-hubot coffee-script \
+    && npm install -g yo generator-hubot coffeescript \
     && groupadd -r hubot && useradd -m -r -g hubot hubot \
     && chown -R hubot:hubot /app \
     && chmod +x entrypoint.sh
 
 USER hubot
-WORKDIR /app
 ARG HUBOT_OWNER
 RUN yo hubot --owner="${HUBOT_OWNER}" --name="Hubot" --description="Delightfully aware robutt" --adapter=slack --defaults
 

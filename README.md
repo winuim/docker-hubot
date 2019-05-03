@@ -2,12 +2,17 @@
 
 ## Build image
 ```
-docker build ./ -t hubot
+docker build ./ -t winuim/hubot
 ```
 
-## hubot start
+## Hubot start
 ```
-docker run --rm -it hubot
+docker run --rm -it --name hubot winuim/hubot
+```
+
+## Debugging start
+```
+docker run --rm -it --name hubot -p 9229:9229 -e DEBUG=true winuim/hubot debug
 ```
 
 # docker-compose: Build image
